@@ -227,6 +227,18 @@ function commitAppSubmission(submissionId: string): Q.Promise<void> {
 function putMetadata(submissionResource: any): Q.Promise<void> {
   console.log(`Adding metadata for new submission ${submissionResource.id}`);
 
+  // If Pricing exists and isAdvancedPricingModel is true, set priceId to null
+  if (submissionResource.pricing && submissionResource.pricing.isAdvancedPricingModel === true) {
+    console.log("Advanced pricing model detected, setting priceId to null...");
+    submissionResource.pricing.priceId = null;
+  } else if (!submissionResource.pricing || submissionResource.pricing.priceId === "Base") {
+    // If pricing is missing or has invalid 'Base', set a valid priceId
+    console.log("Setting pricing to a valid priceId...");
+    submissionResource.pricing = {
+      priceId: "Free"
+    };
+  }
+
   // Also at this point add the given packages to the list of packages to upload.
   api.includePackagesInSubmission(
     packages,
