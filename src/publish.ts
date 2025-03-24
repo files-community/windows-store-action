@@ -228,7 +228,7 @@ function putMetadata(submissionResource: any): Q.Promise<void> {
   console.log(`Adding metadata for new submission ${submissionResource.id}`);
 
 
-  submissionResource.pricing.priceId = null;
+  submissionResource.pricing.priceId = "";
 
   // Also at this point add the given packages to the list of packages to upload.
   api.includePackagesInSubmission(
