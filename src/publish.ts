@@ -246,6 +246,8 @@ function putMetadata(submissionResource: any): Q.Promise<void> {
     "/submissions/" +
     submissionResource.id;
 
+  console.log("Final submissionResource before PUT:", JSON.stringify(submissionResource, null, 2));
+
   return api.putSubmission(currentToken, url, submissionResource);
 }
 
